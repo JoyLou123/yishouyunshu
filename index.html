@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>益寿云枢 · 大健康医疗智慧生态平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/*
+ * 益寿云枢官网 v10.1 · 益寿中国布局 + 原始内容
+ *
+ * 布局参考：https://ysby.dataunion.org.cn
+ * 内容来源：益寿云枢 v9.4 原始内容
+ *
+ * 布局结构（对标益寿中国）：
+ *   1. Hero轮播 + CTA
+ *   2. AI智能健康助手（对话窗口 + 能力卡片）
+ *   3. 药材全链路追溯（5节点时间轴）
+ *   4. 四方角色入口（4角色卡片）
+ *   5. 权威认证（独立模块，4机构认证卡片）
+ *   6. CTA号召区
+ *   7. Footer
+ *
+ * 色彩系统：翠玉绿（生命/中医） + 天空蓝白（科技/信任） + 暖金点缀
+ */
+
+:root {
+  --primary: #0E9E6C;
+  --primary-deep: #0B6E4F;
+  --primary-light: #4ECB9A;
+  --primary-pale: #E8F8F0;
+  --sky: #4A9BD9;
+  --sky-deep: #2E78B5;
+  --sky-pale: #E8F2FA;
+  --gold: #D4A843;
+  --coral: #E07B6C;
+
+  --white: #F9FBFA;
+  --n100: #F2F5F3;
+  --n200: #E3E8E5;
+  --n300: #C8CFCB;
+  --n600: #5C6560;
+  --n800: #2A302D;
+  --n900: #161A18;
+
+  --shadow-sm: 0 1px 3px rgba(22,26,24,0.06);
+  --shadow-md: 0 4px 16px rgba(22,26,24,0.08);
+  --shadow-lg: 0 12px 40px rgba(22,26,24,0.10);
+  --shadow-xl: 0 20px 60px rgba(22,26,24,0.12);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Noto Sans SC', -apple-system, sans-serif;
+  font-size: 16px;
+  color: var(--n800);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body { overflow-x: hidden; }
+
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+button { cursor: pointer; border: none; font-family: inherit; }
+
+/* ── Navigation ── */
+.nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  background: rgba(249,251,250,0.92);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid var(--n200);
+  padding: 0 40px; height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.nav.scrolled {
+  background: rgba(255,255,255,0.98);
+  box-shadow: var(--shadow-md);
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+
+.nav-logo-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.nav-logo-text {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 20px; font-weight: 700;
+  color: var(--primary-deep);
+  letter-spacing: 2px;
+}
+
+.nav-logo-sub {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 11px; font-weight: 400;
+  color: var(--n600);
+  letter-spacing: 1px;
+  margin-left: 2px;
+}
+
+.nav-links {
+  display: flex; align-items: center; gap: 28px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 14px; font-weight: 500;
+  color: var(--n600);
+  transition: color 0.2s;
+  position: relative;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--primary);
+}
+
+.nav-links a.active::after {
+  content: '';
+  position: absolute; bottom: -4px; left: 0; right: 0;
+  height: 2px; background: var(--primary);
+  border-radius: 1px;
+}
+
+.nav-cta {
+  font-size: 13px; font-weight: 600;
+  padding: 8px 22px;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  color: #fff;
+  transition: all 0.25s;
+}
+
+.nav-cta:hover {
+  background: var(--primary-deep);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(14,158,108,0.3);
+}
+
+.nav-mobile-toggle {
+  display: none;
+  width: 36px; height: 36px;
+  align-items: center; justify-content: center;
+  background: none; border: none;
+}
+
+.nav-mobile-toggle span {
+  display: block; width: 20px; height: 2px;
+  background: var(--n800);
+  position: relative;
+  transition: 0.3s;
+}
+
+.nav-mobile-toggle span::before,
+.nav-mobile-toggle span::after {
+  content: ''; position: absolute;
+  width: 20px; height: 2px;
+  background: var(--n800);
+  left: 0; transition: 0.3s;
+}
+
+.nav-mobile-toggle span::before { top: -6px; }
+.nav-mobile-toggle span::after { top: 6px; }
+
+/* ── Hero Carousel ── */
+.hero {
+  position: relative;
+  margin-top: 68px;
+  height: 620px;
+  overflow: hidden;
+}
+
+.hero-slides {
+  position: relative;
+  width: 100%; height: 100%;
+}
+
+.hero-slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+.hero-slide-bg {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-slide-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(11,110,79,0.85) 0%, rgba(14,158,108,0.7) 40%, rgba(74,155,217,0.5) 100%);
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center;
+  max-width: 780px;
+  padding: 0 20px;
+}
+
+.hero-logo-badge {
+  width: 100px; height: 100px;
+  margin: 0 auto 20px;
+  border-radius: 20px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+}
+
+.hero-tag {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  font-size: 13px; font-weight: 500;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.hero-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(34px, 5.5vw, 56px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.25;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.15);
+}
+
+.hero-subtitle {
+  font-size: 18px; font-weight: 300;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.hero-stats {
+  display: flex; justify-content: center; gap: 40px;
+  margin-bottom: 28px;
+}
+
+.hero-stat {
+  text-align: center;
+}
+
+.hero-stat-num {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 32px; font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+
+.hero-stat-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  margin-top: 4px;
+}
+
+.hero-btns {
+  display: flex; gap: 14px;
+  justify-content: center;
+}
+
+.hero-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px;
+  border-radius: var(--radius-full);
+  font-size: 15px; font-weight: 600;
+  transition: all 0.25s;
+}
+
+.hero-btn-primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(14,158,108,0.35);
+}
+
+.hero-btn-primary:hover {
+  background: var(--primary-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(14,158,108,0.45);
+}
+
+.hero-btn-ghost {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  backdrop-filter: blur(6px);
+}
+
+.hero-btn-ghost:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* Carousel indicators */
+.hero-indicators {
+  position: absolute; bottom: 30px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 10px; z-index: 3;
+}
+
+.hero-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  border: none; cursor: pointer;
+  transition: all 0.3s;
+}
+
+.hero-dot.active {
+  background: #fff;
+  width: 28px;
+  border-radius: 5px;
+}
+
+/* ── Certification Section（权威认证独立模块 · 横向勋章条风格） ── */
+.cert-section {
+  padding: 80px 40px;
+  background: linear-gradient(180deg, var(--n100) 0%, var(--sky-pale) 100%);
+}
+
+.cert-grid {
+  max-width: 1000px; margin: 0 auto;
+  display: flex; flex-direction: column;
+  gap: 16px;
+}
+
+.cert-card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: 22px 28px;
+  display: flex; align-items: center; gap: 20px;
+  border: 1px solid var(--n200);
+  transition: all 0.3s;
+  position: relative;
+}
+
+.cert-card::before {
+  content: '';
+  position: absolute; left: 0; top: 12px; bottom: 12px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+}
+
+.cert-card:nth-child(1)::before { background: var(--primary); }
+.cert-card:nth-child(2)::before { background: var(--sky); }
+.cert-card:nth-child(3)::before { background: var(--gold); }
+.cert-card:nth-child(4)::before { background: var(--coral); }
+
+.cert-card:hover {
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow-md);
+}
+
+.cert-card-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.cert-card-icon-1 { background: var(--primary-pale); }
+.cert-card-icon-2 { background: var(--sky-pale); }
+.cert-card-icon-3 { background: #FEF5E7; }
+.cert-card-icon-4 { background: #FDE8E4; }
+
+.cert-card-body {
+  flex: 1; min-width: 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+
+.cert-card-text {
+  flex: 1; min-width: 0;
+}
+
+.cert-card h4 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px; font-weight: 700;
+  color: var(--n900);
+  margin-bottom: 4px;
+}
+
+.cert-card p {
+  font-size: 13px;
+  color: var(--n600);
+  line-height: 1.5;
+}
+
+.cert-card-badge {
+  display: inline-block;
+  font-size: 12px; font-weight: 600;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cert-card:nth-child(1) .cert-card-badge { background: var(--primary-pale); color: var(--primary-deep); }
+.cert-card:nth-child(2) .cert-card-badge { background: var(--sky-pale); color: var(--sky-deep); }
+.cert-card:nth-child(3) .cert-card-badge { background: #FEF5E7; color: #A67C00; }
+.cert-card:nth-child(4) .cert-card-badge { background: #FDE8E4; color: #C0392B; }
+
+/* ── AI Assistant Section（原始"AI智能健康助手"） ── */
+.ai-section {
+  padding: 80px 40px;
+  background: linear-gradient(180deg, var(--sky-pale) 0%, var(--n100) 100%);
+}
+
+.ai-content {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Chat window */
+.ai-chat-window {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--n200);
+  box-shadow: var(--shadow-md);
+}
+
+.ai-chat-header {
+  background: linear-gradient(135deg, var(--primary), var(--sky));
+  padding: 16px 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.ai-chat-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+
+.ai-chat-header-text h4 {
+  font-size: 14px; font-weight: 600; color: #fff;
+}
+
+.ai-chat-header-text p {
+  font-size: 11px; color: rgba(255,255,255,0.7);
+}
+
+.ai-chat-body {
+  padding: 20px;
+  display: flex; flex-direction: column; gap: 14px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.ai-chat-msg {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.ai-chat-msg-bot {
+  background: var(--n100);
+  color: var(--n800);
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+
+.ai-chat-msg-user {
+  background: var(--primary);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+
+.ai-chat-input {
+  display: flex;
+  border-top: 1px solid var(--n200);
+  padding: 12px;
+  gap: 8px;
+}
+
+.ai-chat-input input {
+  flex: 1;
+  border: 1px solid var(--n200);
+  border-radius: var(--radius-full);
+  padding: 10px 16px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.ai-chat-input input:focus {
+  border-color: var(--primary);
+}
+
+.ai-chat-input button {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.ai-chat-input button:hover {
+  background: var(--primary-deep);
+}
+
+/* AI capability cards */
+.ai-cards {
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.ai-card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: 22px;
+  border: 1px solid var(--n200);
+  display: flex; gap: 16px;
+  transition: all 0.3s;
+}
+
+.ai-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-light);
+}
+
+.ai-card-icon {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.ai-card-icon-1 { background: var(--primary-pale); }
+.ai-card-icon-2 { background: var(--sky-pale); }
+.ai-card-icon-3 { background: #FEF5E7; }
+
+.ai-card-text h4 {
+  font-size: 15px; font-weight: 600;
+  color: var(--n900);
+  margin-bottom: 4px;
+}
+
+.ai-card-text p {
+  font-size: 13px;
+  color: var(--n600);
+  line-height: 1.6;
+}
+
+/* ── Traceability Section（原始"药材全链路追溯"） ── */
+.trace-section {
+  padding: 80px 40px;
+  background: linear-gradient(180deg, var(--primary-pale) 0%, #F5FBF8 100%);
+}
+
+.trace-timeline {
+  max-width: 1100px; margin: 0 auto;
+  position: relative;
+  display: flex; justify-content: space-between;
+  align-items: flex-start;
+}
+
+.trace-timeline::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: 10%;
+  right: 10%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-light), var(--sky), var(--gold));
+  border-radius: 2px;
+}
+
+.trace-node {
+  text-align: center;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.trace-node-icon {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  transition: all 0.3s;
+  border: 3px solid transparent;
+}
+
+.trace-node:hover .trace-node-icon {
+  transform: scale(1.12);
+  border-color: var(--primary);
+  box-shadow: 0 4px 16px rgba(14,158,108,0.25);
+}
+
+.trace-node-1 .trace-node-icon { background: #E8F8F0; }
+.trace-node-2 .trace-node-icon { background: #E8F2FA; }
+.trace-node-3 .trace-node-icon { background: #FEF5E7; }
+.trace-node-4 .trace-node-icon { background: #FDE8E4; }
+.trace-node-5 .trace-node-icon { background: #F0E6F6; }
+
+.trace-node h4 {
+  font-size: 15px; font-weight: 600;
+  color: var(--n900);
+  margin-bottom: 4px;
+}
+
+.trace-node p {
+  font-size: 12px;
+  color: var(--n600);
+  line-height: 1.5;
+  max-width: 140px;
+  margin: 0 auto;
+}
+
+/* ── Four Roles Section（原始"四方角色入口"） ── */
+.roles-section {
+  padding: 80px 40px;
+  background: linear-gradient(180deg, #FEFCF5 0%, var(--white) 100%);
+}
+
+.roles-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.role-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  border: 1px solid var(--n200);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.role-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.role-card-1::before { background: var(--primary); }
+.role-card-2::before { background: var(--sky); }
+.role-card-3::before { background: var(--gold); }
+.role-card-4::before { background: var(--coral); }
+
+.role-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--primary-light);
+}
+
+.role-card-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+
+.role-card-1 .role-card-icon { background: var(--primary-pale); }
+.role-card-2 .role-card-icon { background: var(--sky-pale); }
+.role-card-3 .role-card-icon { background: #FEF5E7; }
+.role-card-4 .role-card-icon { background: #FDE8E4; }
+
+.role-card h4 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px; font-weight: 700;
+  color: var(--n900);
+  margin-bottom: 4px;
+}
+
+.role-card .role-subtitle {
+  font-size: 13px;
+  color: var(--n600);
+  margin-bottom: 16px;
+}
+
+.role-card ul {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 8px;
+  margin-bottom: 20px;
+}
+
+.role-card ul li {
+  font-size: 13px;
+  color: var(--n800);
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.role-card ul li::before {
+  content: '✓';
+  position: absolute; left: 0;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.role-card-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 600;
+  color: var(--primary);
+  transition: gap 0.2s;
+}
+
+.role-card-cta:hover {
+  gap: 10px;
+}
+
+.role-card-cta .arrow {
+  transition: transform 0.2s;
+}
+
+.role-card:hover .role-card-cta .arrow {
+  transform: translateX(4px);
+}
+
+/* ── Section common ── */
+.section-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.section-label {
+  display: inline-block;
+  font-size: 13px; font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-pale);
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  color: var(--n900);
+  margin-bottom: 12px;
+}
+
+.section-desc {
+  font-size: 16px; color: var(--n600);
+  max-width: 600px; margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ── CTA Section ── */
+.cta {
+  padding: 80px 40px;
+  background: linear-gradient(135deg, var(--primary-deep) 0%, var(--primary) 50%, var(--sky) 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  top: -100px; right: -100px;
+}
+
+.cta::after {
+  content: '';
+  position: absolute;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  bottom: -80px; left: -80px;
+}
+
+.cta-content {
+  position: relative; z-index: 1;
+  max-width: 600px; margin: 0 auto;
+}
+
+.cta-content h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 36px; font-weight: 900;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.cta-content p {
+  font-size: 17px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.cta-btns {
+  display: flex; gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px;
+  border-radius: var(--radius-full);
+  font-size: 15px; font-weight: 600;
+  transition: all 0.25s;
+}
+
+.cta-btn-white {
+  background: #fff; color: var(--primary-deep);
+}
+
+.cta-btn-white:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.cta-btn-outline {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.4);
+}
+
+.cta-btn-outline:hover {
+  background: rgba(255,255,255,0.22);
+}
+
+/* ── Footer ── */
+.footer {
+  background: var(--n900);
+  color: rgba(255,255,255,0.7);
+  padding: 60px 40px 0;
+}
+
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.2fr;
+  gap: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-brand .footer-logo {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+}
+
+.footer-logo-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.footer-logo-text {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px; font-weight: 700;
+  color: #fff;
+}
+
+.footer-brand p {
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.footer-social {
+  display: flex; gap: 12px;
+}
+
+.footer-social a {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.6);
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.footer-social a:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.footer-col h4 {
+  font-size: 15px; font-weight: 600;
+  color: #fff;
+  margin-bottom: 18px;
+}
+
+.footer-col ul {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.footer-col ul li a {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  transition: color 0.2s;
+}
+
+.footer-col ul li a:hover {
+  color: var(--primary-light);
+}
+
+.footer-contact-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.footer-contact-icon {
+  color: var(--primary-light);
+  margin-top: 2px;
+  font-size: 14px;
+}
+
+.footer-bottom {
+  max-width: 1200px; margin: 0 auto;
+  padding: 24px 0;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
+
+.footer-bottom p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+}
+
+.footer-trust {
+  display: flex; gap: 16px;
+  align-items: center;
+}
+
+.footer-trust span {
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  padding: 4px 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-sm);
+}
+
+/* ── Scroll Animations ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Floating AI Assistant ── */
+.ai-fab {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  z-index: 90;
+}
+
+.ai-fab-btn {
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--sky));
+  color: #fff;
+  font-size: 24px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 20px rgba(14,158,108,0.35);
+  transition: all 0.3s;
+  border: none;
+  position: relative;
+}
+
+.ai-fab-btn::after {
+  content: '';
+  position: absolute; inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-light);
+  opacity: 0;
+  animation: fabPulse 2s ease-in-out infinite;
+}
+
+@keyframes fabPulse {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.15); }
+}
+
+.ai-fab-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 28px rgba(14,158,108,0.45);
+}
+
+.ai-modal {
+  position: fixed;
+  bottom: 96px; right: 28px;
+  width: 430px;
+  max-height: 520px;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 91;
+  border: 1px solid var(--n200);
+}
+
+.ai-modal.open {
+  display: flex;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ai-modal-header {
+  background: linear-gradient(135deg, var(--primary), var(--sky));
+  color: #fff;
+  padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.ai-modal-header h4 {
+  font-size: 15px; font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.ai-modal-close {
+  background: rgba(255,255,255,0.2);
+  border: none; color: #fff;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ai-modal-close:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+.ai-modal-messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: 12px;
+  max-height: 340px;
+}
+
+.ai-msg {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.ai-msg-bot {
+  background: var(--n100);
+  color: var(--n800);
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+
+.ai-msg-user {
+  background: var(--primary);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+
+.ai-modal-input {
+  display: flex;
+  border-top: 1px solid var(--n200);
+  padding: 12px;
+  gap: 8px;
+}
+
+.ai-modal-input input {
+  flex: 1;
+  border: 1px solid var(--n200);
+  border-radius: var(--radius-full);
+  padding: 8px 16px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.ai-modal-input input:focus {
+  border-color: var(--primary);
+}
+
+.ai-modal-input button {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.ai-modal-input button:hover {
+  background: var(--primary-deep);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .ai-content { grid-template-columns: 1fr; }
+  .trace-timeline { flex-wrap: wrap; gap: 20px; justify-content: center; }
+  .trace-timeline::before { display: none; }
+  .trace-node { flex: 0 0 30%; }
+  .roles-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: flex; }
+
+  .hero { height: 520px; }
+  .hero-title { font-size: 30px; }
+  .hero-subtitle { font-size: 15px; }
+  .hero-stats { gap: 20px; }
+  .hero-stat-num { font-size: 24px; }
+  .hero-logo-badge { width: 70px; height: 70px; }
+
+  .ai-section, .trace-section, .roles-section, .cert-section, .cta { padding: 60px 20px; }
+  .cert-card-body { flex-direction: column; align-items: flex-start; }
+
+  .trace-node { flex: 0 0 45%; }
+  .roles-grid { grid-template-columns: 1fr 1fr; }
+  .cert-card-body { flex-direction: column; align-items: flex-start; }
+
+  .section-title { font-size: 26px; }
+  .cta-content h2 { font-size: 28px; }
+
+  .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+
+  .ai-modal { width: calc(100vw - 40px); right: 20px; bottom: 90px; }
+}
+
+@media (max-width: 480px) {
+  .hero { height: 480px; }
+  .hero-title { font-size: 26px; }
+  .hero-btns { flex-direction: column; align-items: center; }
+  .hero-stats { flex-direction: column; gap: 12px; }
+  .trace-node { flex: 0 0 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ Navigation ══════════ -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">
+    <img src="logo-transparent.png" alt="益寿云枢" class="nav-logo-icon">
+    <div>
+      <div class="nav-logo-text">益寿云枢</div>
+      <div class="nav-logo-sub">智慧健康生态</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#hero" class="active">首页</a></li>
+    <li><a href="#ai-section">AI助手</a></li>
+    <li><a href="#trace-section">药材追溯</a></li>
+    <li><a href="#roles-section">四方入口</a></li>
+    <li><a href="#cert">权威认证</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">开始使用</button>
+  <button class="nav-mobile-toggle" id="navToggle">
+    <span></span>
+  </button>
+</nav>
+
+<!-- ══════════ Hero Carousel ══════════ -->
+<section class="hero" id="hero">
+  <div class="hero-slides" id="heroSlides">
+    <!-- Slide 1: 主品牌 -->
+    <div class="hero-slide active" data-index="0">
+      <div class="hero-slide-bg" style="background: linear-gradient(135deg, #0B6E4F 0%, #0E9E6C 40%, #4A9BD9 100%);"></div>
+      <div class="hero-slide-overlay" style="background: linear-gradient(135deg, rgba(11,110,79,0.6) 0%, rgba(14,158,108,0.3) 50%, rgba(74,155,217,0.2) 100%);"></div>
+      <div class="hero-content">
+        <img src="logo-transparent.png" alt="益寿云枢" class="hero-logo-badge">
+        <h1 class="hero-title">融合中医节气智慧<br>守护全民健康</h1>
+        <p class="hero-subtitle">益寿云枢——以大健康医疗为核心、AI驱动的全生命周期健康管理与服务平台</p>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-num">100万+</div>
+            <div class="hero-stat-label">服务用户</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">2000+</div>
+            <div class="hero-stat-label">合作机构</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">50万+</div>
+            <div class="hero-stat-label">追溯药材批次</div>
+          </div>
+        </div>
+        <div class="hero-btns">
+          <a href="#ai-section" class="hero-btn hero-btn-primary">开始使用 →</a>
+          <a href="#trace-section" class="hero-btn hero-btn-ghost">了解追溯体系</a>
+        </div>
+      </div>
+    </div>
+    <!-- Slide 2: AI助手 -->
+    <div class="hero-slide" data-index="1">
+      <div class="hero-slide-bg" style="background: linear-gradient(135deg, #2E78B5 0%, #4A9BD9 40%, #4ECB9A 100%);"></div>
+      <div class="hero-slide-overlay" style="background: linear-gradient(135deg, rgba(46,120,181,0.5) 0%, rgba(74,155,217,0.2) 50%, rgba(78,203,154,0.15) 100%);"></div>
+      <div class="hero-content">
+        <span class="hero-tag">🤖 AI 智能健康助手</span>
+        <h1 class="hero-title">7×24小时<br>AI健康管家</h1>
+        <p class="hero-subtitle">智能体质辨识、节气养生方案、个性化健康建议，AI助手为您全方位守护</p>
+        <div class="hero-btns">
+          <a href="#ai-section" class="hero-btn hero-btn-primary">对话AI助手 →</a>
+          <a href="#roles-section" class="hero-btn hero-btn-ghost">了解四方生态</a>
+        </div>
+      </div>
+    </div>
+    <!-- Slide 3: 药材追溯 -->
+    <div class="hero-slide" data-index="2">
+      <div class="hero-slide-bg" style="background: linear-gradient(135deg, #0E9E6C 0%, #D4A843 50%, #E07B6C 100%);"></div>
+      <div class="hero-slide-overlay" style="background: linear-gradient(135deg, rgba(14,158,108,0.5) 0%, rgba(212,168,67,0.2) 50%, rgba(224,123,108,0.15) 100%);"></div>
+      <div class="hero-content">
+        <span class="hero-tag">🌿 中药材全程追溯</span>
+        <h1 class="hero-title">从种子到成品<br>每一味药材皆可溯源</h1>
+        <p class="hero-subtitle">区块链赋能中药材全链路追溯，保障用药安全，让传统中医药焕发数字新生命</p>
+        <div class="hero-btns">
+          <a href="#trace-section" class="hero-btn hero-btn-primary">了解追溯体系 →</a>
+          <a href="#cert" class="hero-btn hero-btn-ghost">权威认证</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-indicators" id="heroIndicators">
+    <button class="hero-dot active" data-index="0"></button>
+    <button class="hero-dot" data-index="1"></button>
+    <button class="hero-dot" data-index="2"></button>
+  </div>
+</section>
+
+
+<!-- ══════════ AI Assistant Section（原始"AI智能健康助手"） ══════════ -->
+<section class="ai-section" id="ai-section">
+  <div class="section-header fade-up">
+    <span class="section-label">AI 智能健康助手</span>
+    <h2 class="section-title">AI 把脉问诊，精准体质辨识</h2>
+    <p class="section-desc">智能体质辨识、节气养生方案、个性化健康建议，7×24小时AI健康管家为您服务</p>
+  </div>
+  <div class="ai-content">
+    <!-- 左侧：对话窗口 -->
+    <div class="ai-chat-window fade-up">
+      <div class="ai-chat-header">
+        <div class="ai-chat-avatar">🤖</div>
+        <div class="ai-chat-header-text">
+          <h4>益寿AI健康助手</h4>
+          <p>在线 · 平均响应 &lt;1秒</p>
+        </div>
+      </div>
+      <div class="ai-chat-body" id="chatBody">
+        <div class="ai-chat-msg ai-chat-msg-bot">您好！我是益寿AI健康助手，可以为您提供体质辨识、节气养生、药材查询等服务。请问有什么可以帮您的？</div>
+        <div class="ai-chat-msg ai-chat-msg-user">我最近总是失眠，有什么调理建议吗？</div>
+        <div class="ai-chat-msg ai-chat-msg-bot">失眠多与心脾两虚、肝郁化火或心肾不交有关。建议：1）睡前泡脚按摩涌泉穴；2）饮用酸枣仁茶；3）避免睡前过度用脑。如持续失眠建议就医。需要我为您定制个性化方案吗？</div>
+      </div>
+      <div class="ai-chat-input">
+        <input type="text" id="chatInput" placeholder="输入您的健康问题...">
+        <button id="chatSendBtn">➤</button>
+      </div>
+    </div>
+    <!-- 右侧：3个能力卡片 -->
+    <div class="ai-cards fade-up">
+      <div class="ai-card">
+        <div class="ai-card-icon ai-card-icon-1">🎯</div>
+        <div class="ai-card-text">
+          <h4>精准体质辨识</h4>
+          <p>基于中医九种体质理论，AI智能分析您的体质类型，提供个性化养生建议</p>
+        </div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-icon ai-card-icon-2">🌿</div>
+        <div class="ai-card-text">
+          <h4>节气养生方案</h4>
+          <p>根据二十四节气变化，智能推送应季饮食、运动、起居养生方案</p>
+        </div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-icon ai-card-icon-3">💊</div>
+        <div class="ai-card-text">
+          <h4>智能配伍提醒</h4>
+          <p>药材配伍禁忌检查、用药安全提醒，追溯药材来源确保品质</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ Traceability Section（原始"药材全链路追溯"） ══════════ -->
+<section class="trace-section" id="trace-section">
+  <div class="section-header fade-up">
+    <span class="section-label">药材全链路追溯</span>
+    <h2 class="section-title">从种子到成品，每一味药材皆可溯源</h2>
+    <p class="section-desc">五节点全链路追溯，保障用药安全，让传统中医药焕发数字新生命</p>
+  </div>
+  <div class="trace-timeline fade-up">
+    <div class="trace-node trace-node-1">
+      <div class="trace-node-icon">🌱</div>
+      <h4>种子溯源</h4>
+      <p>产地认证、品种鉴定、种植环境记录</p>
+    </div>
+    <div class="trace-node trace-node-2">
+      <div class="trace-node-icon">🌿</div>
+      <h4>规范种植</h4>
+      <p>GAP标准化、农事日志、土质监测</p>
+    </div>
+    <div class="trace-node trace-node-3">
+      <div class="trace-node-icon">⚗️</div>
+      <h4>加工生产</h4>
+      <p>GMP认证、炮制工艺、质检留样</p>
+    </div>
+    <div class="trace-node trace-node-4">
+      <div class="trace-node-icon">🔬</div>
+      <h4>研发检测</h4>
+      <p>有效成分分析、重金属农残检测</p>
+    </div>
+    <div class="trace-node trace-node-5">
+      <div class="trace-node-icon">📦</div>
+      <h4>出品流通</h4>
+      <p>追溯码绑定、冷链物流、扫码验真</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ Four Roles Section（原始"四方角色入口"） ══════════ -->
+<section class="roles-section" id="roles-section">
+  <div class="section-header fade-up">
+    <span class="section-label">四方生态</span>
+    <h2 class="section-title">多方共赢的健康生态</h2>
+    <p class="section-desc">C端用户、OPC达人、B端服务商、供应商四方角色，覆盖健康产业链全角色</p>
+  </div>
+  <div class="roles-grid">
+    <!-- C端用户 -->
+    <div class="role-card role-card-1 fade-up">
+      <div class="role-card-icon">👤</div>
+      <h4>C 端用户</h4>
+      <div class="role-subtitle">普通大众 · 健康消费者</div>
+      <ul>
+        <li>获取权威健康知识</li>
+        <li>享受个性化健康服务</li>
+        <li>购买品质保障产品</li>
+        <li>上传健康数据监测</li>
+        <li>获取AI健康建议</li>
+      </ul>
+      <a href="#" class="role-card-cta">进入社区 <span class="arrow">→</span></a>
+    </div>
+    <!-- OPC健康大师 -->
+    <div class="role-card role-card-2 fade-up">
+      <div class="role-card-icon">🎓</div>
+      <h4>OPC 健康大师</h4>
+      <div class="role-subtitle">健康达人 · 内容创作者</div>
+      <ul>
+        <li>制作健康宣讲视频</li>
+        <li>发布专业健康内容</li>
+        <li>服务C端健康用户</li>
+        <li>建立个人品牌影响力</li>
+        <li>获取创作收益回报</li>
+      </ul>
+      <a href="#" class="role-card-cta">申请入驻 <span class="arrow">→</span></a>
+    </div>
+    <!-- B端服务商 -->
+    <div class="role-card role-card-3 fade-up">
+      <div class="role-card-icon">🏥</div>
+      <h4>B 端服务商</h4>
+      <div class="role-subtitle">健康产品 · 服务提供者</div>
+      <ul>
+        <li>提供健康医疗服务</li>
+        <li>管理客户健康档案</li>
+        <li>AI辅助分析与诊断</li>
+        <li>报告导出与分享</li>
+        <li>拓展获客渠道</li>
+      </ul>
+      <a href="#" class="role-card-cta">商家入驻 <span class="arrow">→</span></a>
+    </div>
+    <!-- 药材供应商 -->
+    <div class="role-card role-card-4 fade-up">
+      <div class="role-card-icon">🌿</div>
+      <h4>药材供应商</h4>
+      <div class="role-subtitle">药材供应 · 全链路可追溯</div>
+      <ul>
+        <li>药材全链路追溯</li>
+        <li>种子→种植→加工→研发→出产</li>
+        <li>产品上架与展示</li>
+        <li>质量认证与验真</li>
+        <li>供应链数据管理</li>
+      </ul>
+      <a href="#" class="role-card-cta">供应商入驻 <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ Certification Section（权威认证独立模块 · 盾牌勋章风格） ══════════ -->
+<section class="cert-section" id="cert">
+  <div class="section-header fade-up">
+    <span class="section-label">权威认证</span>
+    <h2 class="section-title">权威机构认证，品质信赖保障</h2>
+    <p class="section-desc">多家国家级、行业级权威机构认证背书，确保平台专业性与服务品质</p>
+  </div>
+  <div class="cert-grid">
+    <div class="cert-card fade-up">
+      <div class="cert-card-icon cert-card-icon-1">🏛️</div>
+      <div class="cert-card-body">
+        <h4>世界中医药学会联合会 <span class="cert-card-badge">国际认证</span></h4>
+        <p>世中联官方审核认证，国际权威背书，推动中医药国际化标准建设</p>
+      </div>
+    </div>
+    <div class="cert-card fade-up">
+      <div class="cert-card-icon cert-card-icon-2">🌿</div>
+      <div class="cert-card-body">
+        <h4>中国中药协会 <span class="cert-card-badge">行业标准</span></h4>
+        <p>中药材质量标准认证，行业权威认可，保障药材品质与用药安全</p>
+      </div>
+    </div>
+    <div class="cert-card fade-up">
+      <div class="cert-card-icon cert-card-icon-3">🏥</div>
+      <div class="cert-card-body">
+        <h4>国家中医药管理局 <span class="cert-card-badge">国家级</span></h4>
+        <p>国家级行业主管部门认可与指导，政策引领中医药传承创新</p>
+      </div>
+    </div>
+    <div class="cert-card fade-up">
+      <div class="cert-card-icon cert-card-icon-4">🛡️</div>
+      <div class="cert-card-body">
+        <h4>中国健康管理协会 <span class="cert-card-badge">专业认证</span></h4>
+        <p>健康管理行业标准认证，专业信赖，规范健康服务体系建设</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA Section ══════════ -->
+<section class="cta" id="cta">
+  <div class="cta-content fade-up">
+    <h2>加入益寿云枢<br>开启智慧健康新生活</h2>
+    <p>AI赋能、中医智慧、全程追溯、四方生态<br>现在注册，免费体验健康管理服务</p>
+    <div class="cta-btns">
+      <a href="#" class="cta-btn cta-btn-white">立即注册 →</a>
+      <a href="#" class="cta-btn cta-btn-outline">下载APP</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ Footer ══════════ -->
+<footer class="footer" id="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="logo-transparent.png" alt="益寿云枢" class="footer-logo-icon">
+        <span class="footer-logo-text">益寿云枢</span>
+      </div>
+      <p>益寿云枢——融合中医节气智慧与现代AI技术的大健康医疗智慧生态平台。世中联权威背书，AI智能健康助手，药材全链路追溯，四方生态共治共享。</p>
+      <div class="footer-social">
+        <a href="#" title="微信">💬</a>
+        <a href="#" title="微博">📢</a>
+        <a href="#" title="抖音">🎵</a>
+        <a href="#" title="小红书">📕</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>快速链接</h4>
+      <ul>
+        <li><a href="#hero">首页</a></li>
+        <li><a href="#ai-section">AI助手</a></li>
+        <li><a href="#trace-section">药材追溯</a></li>
+        <li><a href="#roles-section">四方入口</a></li>
+        <li><a href="#cert">权威认证</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>四方入口</h4>
+      <ul>
+        <li><a href="#">C端用户社区</a></li>
+        <li><a href="#">OPC达人中心</a></li>
+        <li><a href="#">B端服务商入驻</a></li>
+        <li><a href="#">药材供应商门户</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>联系我们</h4>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">📍</span>
+        <span>北京市海淀区中关村科技园</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">📞</span>
+        <span>400-888-9999</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">📧</span>
+        <span>contact@yishouyunshu.com</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">🕐</span>
+        <span>工作日 9:00 - 18:00</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 益寿云枢 All Rights Reserved. 京ICP备XXXXXXXX号</p>
+    <div class="footer-trust">
+      <span>世中联认证</span>
+      <span>等保三级</span>
+      <span>中药协会</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════ Floating AI Assistant ══════════ -->
+<div class="ai-fab">
+  <button class="ai-fab-btn" id="aiFabBtn" title="AI健康助手">🩺</button>
+</div>
+<div class="ai-modal" id="aiModal">
+  <div class="ai-modal-header">
+    <h4>🤖 益寿AI健康助手</h4>
+    <button class="ai-modal-close" id="aiModalClose">✕</button>
+  </div>
+  <div class="ai-modal-messages" id="aiMessages">
+    <div class="ai-msg ai-msg-bot">您好！我是益寿AI健康助手，可以为您提供体质辨识、节气养生、药材查询等服务。请问有什么可以帮您的？</div>
+  </div>
+  <div class="ai-modal-input">
+    <input type="text" id="aiInput" placeholder="输入您的健康问题...">
+    <button id="aiSendBtn">➤</button>
+  </div>
+</div>
+
+<script>
+// ── Nav Scroll Effect ──
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ── Nav Active Link ──
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = document.querySelectorAll('section[id]');
+
+function updateActiveLink() {
+  const scrollY = window.scrollY + 100;
+  sections.forEach(sec => {
+    const top = sec.offsetTop;
+    const height = sec.offsetHeight;
+    const id = sec.getAttribute('id');
+    if (scrollY >= top && scrollY < top + height) {
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + id) {
+          link.classList.add('active');
+        }
+      });
+    }
+  });
+}
+window.addEventListener('scroll', updateActiveLink);
+
+// ── Hero Carousel ──
+let currentSlide = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.hero-dot');
+let autoPlayTimer;
+
+function goToSlide(index) {
+  slides[currentSlide].classList.remove('active');
+  dots[currentSlide].classList.remove('active');
+  currentSlide = index;
+  slides[currentSlide].classList.add('active');
+  dots[currentSlide].classList.add('active');
+}
+
+function nextSlide() {
+  goToSlide((currentSlide + 1) % slides.length);
+}
+
+function startAutoPlay() {
+  autoPlayTimer = setInterval(nextSlide, 5000);
+}
+
+function stopAutoPlay() {
+  clearInterval(autoPlayTimer);
+}
+
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    stopAutoPlay();
+    goToSlide(parseInt(dot.dataset.index));
+    startAutoPlay();
+  });
+});
+
+startAutoPlay();
+
+// ── Scroll Animations ──
+const fadeEls = document.querySelectorAll('.fade-up');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+fadeEls.forEach(el => observer.observe(el));
+
+// ── Inline Chat (AI Section) ──
+const chatBody = document.getElementById('chatBody');
+const chatInput = document.getElementById('chatInput');
+const chatSendBtn = document.getElementById('chatSendBtn');
+
+const aiReplies = {
+  '体质': '根据中医九种体质分类，您可以通过我们的AI体质辨识系统进行自测。只需回答几个简单问题，系统将为您精准辨识体质类型，并给出个性化养生建议。',
+  '节气': '当前正值芒种节气，建议：饮食宜清淡，多食绿豆、薏米等清热利湿之品；起居宜晚睡早起，适当午休；运动宜舒缓，避免大汗淋漓。',
+  '药材': '益寿云枢药材追溯系统覆盖全国主要药材产区，支持产地、品种、采收时间、加工流程等全链路信息查询。请告诉我您想查询的药材名称。',
+  '心跳': '您可以通过益寿云枢APP上传心跳、脉搏等健康数据，系统将实时分析并在异常时发出预警。支持智能手环、血压计等多种设备接入。',
+  '失眠': '失眠多与心脾两虚、肝郁化火或心肾不交有关。建议：1）睡前泡脚按摩涌泉穴；2）饮用酸枣仁茶；3）避免睡前过度用脑。如持续失眠建议就医。',
+  '头痛': '头痛需分型辨证：外感头痛多属风寒/风热，内伤头痛多与肝阳上亢、气血亏虚有关。建议注意休息，避免过度用眼。如持续剧烈头痛请及时就医。',
+  '养生': '中医养生讲究"法于阴阳，和于术数"。建议：1）顺应四时变化调整起居饮食；2）保持情志调畅；3）适度运动；4）定期体质辨识，针对性调理。',
+  '感冒': '感冒分风寒、风热两型。风寒：怕冷重、发热轻、无汗，宜荆防败毒散；风热：发热重、怕冷轻、有汗，宜银翘散。多饮温水，注意休息。',
+  '脾胃': '脾胃为后天之本。调理建议：1）饮食定时定量，细嚼慢咽；2）少食生冷油腻；3）饭后散步助消化；4）可按揉足三里穴；5）如长期不适应就医。',
+  '关节': '关节疼痛多与风、寒、湿邪有关。建议：1）注意保暖防寒；2）适度活动，避免久坐；3）可艾灸患处；4）如红肿热痛请及时就医排查风湿。',
+  '皮肤': '皮肤问题多与肺、脾、肝功能失调有关。建议：1）饮食清淡，少食辛辣；2）保持皮肤清洁湿润；3）规律作息，避免熬夜；4）如反复发作请就医。',
+  'default': '感谢您的咨询！我是益寿AI健康助手，可以为您提供体质辨识、节气养生、药材追溯等服务。请描述您的健康问题，我将为您解答。'
+};
+
+function sendInlineChat() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'ai-chat-msg ai-chat-msg-user';
+  userMsg.textContent = text;
+  chatBody.appendChild(userMsg);
+
+  chatInput.value = '';
+
+  setTimeout(() => {
+    const botMsg = document.createElement('div');
+    botMsg.className = 'ai-chat-msg ai-chat-msg-bot';
+    let reply = aiReplies['default'];
+    for (const key in aiReplies) {
+      if (key !== 'default' && text.includes(key)) {
+        reply = aiReplies[key];
+        break;
+      }
+    }
+    botMsg.textContent = reply;
+    chatBody.appendChild(botMsg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }, 800);
+
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+chatSendBtn.addEventListener('click', sendInlineChat);
+chatInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') sendInlineChat();
+});
+
+// ── Floating AI Assistant ──
+const aiFabBtn = document.getElementById('aiFabBtn');
+const aiModal = document.getElementById('aiModal');
+const aiModalClose = document.getElementById('aiModalClose');
+const aiInput = document.getElementById('aiInput');
+const aiSendBtn = document.getElementById('aiSendBtn');
+const aiMessages = document.getElementById('aiMessages');
+
+function openAI() {
+  aiModal.classList.add('open');
+}
+
+function closeAI() {
+  aiModal.classList.remove('open');
+}
+
+aiFabBtn.addEventListener('click', () => {
+  aiModal.classList.toggle('open');
+});
+
+aiModalClose.addEventListener('click', closeAI);
+
+function sendModalMsg() {
+  const text = aiInput.value.trim();
+  if (!text) return;
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'ai-msg ai-msg-user';
+  userMsg.textContent = text;
+  aiMessages.appendChild(userMsg);
+
+  aiInput.value = '';
+
+  setTimeout(() => {
+    const botMsg = document.createElement('div');
+    botMsg.className = 'ai-msg ai-msg-bot';
+    let reply = aiReplies['default'];
+    for (const key in aiReplies) {
+      if (key !== 'default' && text.includes(key)) {
+        reply = aiReplies[key];
+        break;
+      }
+    }
+    botMsg.textContent = reply;
+    aiMessages.appendChild(botMsg);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }, 600);
+
+  aiMessages.scrollTop = aiMessages.scrollHeight;
+}
+
+aiSendBtn.addEventListener('click', sendModalMsg);
+aiInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') sendModalMsg();
+});
+
+// ── Mobile Nav Toggle ──
+const navToggle = document.getElementById('navToggle');
+navToggle.addEventListener('click', () => {
+  const links = document.querySelector('.nav-links');
+  if (links.style.display === 'flex') {
+    links.style.display = 'none';
+  } else {
+    links.style.display = 'flex';
+    links.style.position = 'absolute';
+    links.style.top = '68px';
+    links.style.left = '0';
+    links.style.right = '0';
+    links.style.background = '#fff';
+    links.style.flexDirection = 'column';
+    links.style.padding = '20px';
+    links.style.gap = '16px';
+    links.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)';
+    links.style.borderBottom = '1px solid var(--n200)';
+  }
+});
+</script>
+</body>
+</html>
